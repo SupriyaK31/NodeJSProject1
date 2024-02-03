@@ -33,8 +33,15 @@ app.get('/', (req, res) => {
 
 app.post('/createTable', (req, res) => {
   const tableName = req.body.tableName;
-  const fields = req.body.fields;
-
+  const field = req.body.fields;
+  const fieldsType=req.body.fieldTypes;
+  let fields;
+  if (field.length === fieldsType.length) {
+      fields= field.map((field, index) => `${field} ${fieldsType[index]}`).join(',');
+      console.log(fields)
+  } else {
+      console.error('Arrays have different lengths');
+  }
 
   const createTableQuery = `CREATE TABLE ${tableName} (${fields})`;
 
